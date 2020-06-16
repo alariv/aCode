@@ -1,9 +1,5 @@
 <?php
-
-
-
-
-
+echo "";
 ?>
 <html>
 <head>
