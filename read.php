@@ -1,6 +1,5 @@
 <?
-function read($filename){
-    echo "<br>reading<br>";
+    $filename=$_POST['filename'];
     $myfile = fopen("./snippets/".$filename.".php", "r") or die("<br>No file found!");
     $htmlCoded = fread($myfile,filesize("./snippets/".$filename.".php"));
     fclose($myfile);
@@ -13,5 +12,8 @@ function read($filename){
     $cssCoded = fread($myfile,filesize("./snippets/style/".$filename.".css"));
     fclose($myfile);
 
-}
+
+    
+
+    echo $htmlCoded."|".$jsCoded."|".$cssCoded;
 ?>

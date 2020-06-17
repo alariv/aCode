@@ -1,22 +1,13 @@
 <?
-include "read.php";
 $snippet=$_GET['key'];
-if($snippet!=""){
-    echo "calling read";
-    // read($snippet);
-    // echo $htmlCoded;
-    // echo "<br>";
-    // echo $jsCoded;
-    // echo "<br>";
-    // echo $cssCoded;
-    // echo "<br>";
-}
+
 ?>
 <html>
 <head>
 <script src="jquery-3.5.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
 <link type="text/css" rel="stylesheet" href="reset.css">
@@ -51,6 +42,14 @@ if($snippet!=""){
                 // console.log("wrote sumthing");
                 write();
             });
+            // console.log("key: <? echo $snippet ?>");
+        
+            if("<? echo $snippet ?>"!=""){
+                fileName="<? echo $snippet ?>";
+                read();
+            }
+            
+            
             
         })
         function write(){
@@ -74,13 +73,34 @@ if($snippet!=""){
 
                 });
         }
+        function read(){
+            $.ajax({
+                url : './read.php',
+                type : 'POST',
+                data : ({
+                    filename: fileName
+                }),
+                success : function (result) {
+                    console.log (result);
+
+                    var html=result.split("|")[0].split("<body>")[1].replace("</body>","").replace("</html>","");
+                    var js=result.split("|")[1];
+                    var css=result.split("|")[2];
+                $('#editHtml').val(html);
+                $('#editJs').val(js);
+                $('#editCss').val(css);
+                    
+                $('.final').find('iframe').attr("src","./snippets/"+fileName+'.php');
+                },
+                error : function (e) {
+                    console.log (e);
+                }
+
+                });
+        }
 
         
     </script>
     
 </body>
-
-
-    
-
 </html>
