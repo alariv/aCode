@@ -1,49 +1,46 @@
-<?php
+<?
 session_start();
+$filename=$_POST['filename'];
+$fileHeader="
+<? 
 
-$fileHeader="<html><head></head>
+?>
+<html>
+<head>
+    <script type='text/javascript' src='script/".$filename.".js'></script>
+    <link type='text/css' rel='stylesheet' href='style/".$filename.".css'>
+</head>
 <body>";
-
 $fileFooter="</body>
 </html>";
 
-$currentFile=$_POST['filename'];
-if($currentFile!=""){
-    $htmlCode=$_POST['htmlCode'];
-    $cssCode="<style>".$_POST['cssCode']."</style>";
-    $jsCode="<script>".$_POST['jsCode']."</script>";
-    
-    $fileContent=$htmlCode.$cssCode.$jsCode;
-    
-    $myFile = $currentFile; 
-    $fh = fopen("./snippets/".$myFile.".html", 'w'); 
-    $stringData = $fileHeader.$fileContent.$myFile.$fileFooter;   
-    fwrite($fh, $stringData);
-    fclose($fh);    
-    
-    echo $currentFile;
-
-}else{
+if($filename==""){
     $random=rand ( 100000 , 100000000 );
     $randomStr=generateRandomString();
     $filename=hash('sha1',$random.$randomStr);
-    $htmlCode=$_POST['htmlCode'];
-    $cssCode="<style>".$_POST['cssCode']."</style>";
-    $jsCode="<script>".$_POST['jsCode']."</script>";
-
-    $fileContent=$htmlCode.$cssCode.$jsCode;
-
-    $myFile = $filename; 
-    $fh = fopen("./snippets/".$myFile.".html", 'w'); 
-    $stringData = $fileHeader.$fileContent.$myFile.$fileFooter;   
-    fwrite($fh, $stringData);
-    fclose($fh);
-    
-    echo $filename;
-
 }
 
+$htmlCode=$_POST['htmlCode'];
+$cssCode=$_POST['cssCode'];
+$jsCode=$_POST['jsCode'];
 
+// write php file
+$fh = fopen("./snippets/".$filename.".php", 'w'); 
+$stringData = $fileHeader.$htmlCode.$fileFooter;   
+fwrite($fh, $stringData);
+fclose($fh);
+// write js file
+$fh = fopen("./snippets/script/".$filename.".js", 'w'); 
+$stringData = $jsCode;   
+fwrite($fh, $stringData);
+fclose($fh);
+// write css file
+$fh = fopen("./snippets/style/".$filename.".css", 'w'); 
+$stringData = $cssCode;   
+fwrite($fh, $stringData);
+fclose($fh);
+
+echo $filename;
 
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

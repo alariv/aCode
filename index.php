@@ -1,5 +1,16 @@
-<?php
-echo "";
+<?
+include "read.php";
+$snippet=$_GET['key'];
+if($snippet!=""){
+    echo "calling read";
+    // read($snippet);
+    // echo $htmlCoded;
+    // echo "<br>";
+    // echo $jsCoded;
+    // echo "<br>";
+    // echo $cssCoded;
+    // echo "<br>";
+}
 ?>
 <html>
 <head>
@@ -12,9 +23,8 @@ echo "";
 <link type="text/css" rel="stylesheet" href="style.css">
 
 </head>
-<body>
-    
-    <div class="navCont">
+<body>    
+    <div class="navCont" style="display:none">
         <div class="navHeader">aCode</div>
     </div>
 
@@ -38,9 +48,10 @@ echo "";
         var fileName="";
         $(function(){
             $('.code').on('keyup',function(){
-                console.log("wrote sumthing");
+                // console.log("wrote sumthing");
                 write();
             });
+            
         })
         function write(){
             $.ajax({
@@ -55,7 +66,7 @@ echo "";
                 success : function (result) {
                     //console.log (result);
                     fileName=result;
-                    $('.final').find('iframe').attr("src","./snippets/"+result+'.html');
+                    $('.final').find('iframe').attr("src","./snippets/"+result+'.php');
                 },
                 error : function (e) {
                     console.log (e);
@@ -63,6 +74,7 @@ echo "";
 
                 });
         }
+
         
     </script>
     
