@@ -4,19 +4,35 @@ $snippet=$_GET['key'];
 ?>
 <html>
 <head>
+<!-- hamburgers.css -->
+<link href="hamburgers/dist/hamburgers.css" rel="stylesheet">
+
+<!-- jQuery -->
 <script src="jquery-3.5.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+<!-- Google icons -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<!-- Google font -->
 <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 
 <link type="text/css" rel="stylesheet" href="reset.css">
 <link type="text/css" rel="stylesheet" href="style.css">
+<script src="scripts/main.js"></script>
 
 </head>
 <body>    
-    <div class="navCont" style="display:none">
-        <div class="navHeader">aCode</div>
+    <div class="navCont" >
+        <div class="navHeader">aCode<div class="codeIndicatior"></div></div>
+
+        <!-- <div class="hamburger hamburger--collapse">
+            <div class="hamburger-box">
+                <div class="hamburger-inner"></div>
+            </div>
+        </div> -->
+        <span class="material-icons share-icon">
+            share
+        </span>
     </div>
 
     <div class="editCont">
@@ -35,71 +51,33 @@ $snippet=$_GET['key'];
     </div>
     <div class="final"><iframe src='' frameborder="0"></iframe></div>
 
+
+    <div class="popup">
+        <div class="popupCont share">
+        <span class="material-icons closeBtn">close</span>
+
+            <div class="popupContent">
+                <button id='collaborativeLinkBtn' onclick="copy('collaborative')">copy editable link</button>
+                <button hidden>copy collaborative link</button>
+                
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="collaborativelink">
+    <input type="hidden" id="strictlink">
+
     <script>
-        var fileName="";
         $(function(){
-            $('.code').on('keyup',function(){
-                // console.log("wrote sumthing");
-                write();
-            });
-            // console.log("key: <? echo $snippet ?>");
-        
-            if("<? echo $snippet ?>"!=""){
-                fileName="<? echo $snippet ?>";
-                read();
-            }
-            
-            
-            
-        })
-        function write(){
-            $.ajax({
-                url : './write.php',
-                type : 'POST',
-                data : ({
-                    filename: fileName,
-                    htmlCode:$('#editHtml').val(),
-                    cssCode:$('#editCss').val(),
-                    jsCode:$('#editJs').val()
-                }),
-                success : function (result) {
-                    //console.log (result);
-                    fileName=result;
-                    $('.final').find('iframe').attr("src","./snippets/"+result+'.php');
-                },
-                error : function (e) {
-                    console.log (e);
-                }
+    // console.log("key: <? echo $snippet ?>");
 
-                });
-        }
-        function read(){
-            $.ajax({
-                url : './read.php',
-                type : 'POST',
-                data : ({
-                    filename: fileName
-                }),
-                success : function (result) {
-                    console.log (result);
-
-                    var html=result.split("|")[0].split("<body>")[1].replace("</body>","").replace("</html>","");
-                    var js=result.split("|")[1];
-                    var css=result.split("|")[2];
-                $('#editHtml').val(html);
-                $('#editJs').val(js);
-                $('#editCss').val(css);
-                    
-                $('.final').find('iframe').attr("src","./snippets/"+fileName+'.php');
-                },
-                error : function (e) {
-                    console.log (e);
-                }
-
-                });
-        }
-
-        
+    if("<? echo $snippet ?>"!=""){
+        fileName="<? echo $snippet ?>";
+        read();
+    }
+    
+    
+    
+})
     </script>
     
 </body>

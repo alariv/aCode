@@ -13,6 +13,9 @@ body *{
     background-color: navy;
     padding: 5px 0;
 }
+.navCont *{
+    display: inline-block;
+}
 .navHeader{
     font-size: 40px;
     line-height: 50px;
@@ -62,4 +65,66 @@ textarea.codeCont:nth-of-type(even){
 .final iframe{
     width: 100%;
     height: 100%;
+}
+.codeIndicatior{
+    height: 3px;
+    width: 16px;
+    background-color: white;
+    display: inline-block;
+    margin-left: 5px;
+
+}
+.hamburger{
+    float: right;
+}
+.material-icons:hover{
+    cursor: pointer;
+}
+.share-icon{
+    float: right;
+    padding: 13px 20px 13px 15px;
+}
+.hamburger-box *{
+    background-color: white !important;
+}
+.popup{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.25);
+}
+.popupCont{
+    display: none;
+    margin: auto;
+    margin-top: 20%;
+    /* color: white; */
+    background-color: white;
+    max-width: 500px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 25px 10px #00000038;
+    text-align: right;
+}
+.popupContent{
+    text-align: center;
+    padding: 20px 20px 34px;
+}
+button{
+    background-color: white;
+    border: 2px solid navy;
+    color: navy;
+    border-radius: 50px;
+    padding: 5px 15px;
+    font-weight: 600;
+    text-transform: uppercase;
+    transition: border-color 1s,color 1s,background-color 1s;
+}
+button.success{
+    color: #00a500;
+    border-color: #00a500;
+    background-color: #00a50021;
+    transition: border-color .1s,color .1s,background-color .1s;
 }
